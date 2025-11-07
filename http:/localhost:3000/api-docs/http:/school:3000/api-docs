@@ -1,0 +1,2199 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "Swagger Petstore - OpenAPI 3.1",
+    "description" : "This is a sample Pet Store Server based on the OpenAPI 3.1 specification.  You can find out more about\nSwagger at [https://swagger.io](https://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+    "termsOfService" : "https://swagger.io/terms/",
+    "contact" : {
+      "email" : "apiteam@swagger.io"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Swagger",
+    "url" : "https://swagger.io"
+  },
+  "servers" : [ {
+    "url" : "https://petstore31.swagger.io/api/v3"
+  } ],
+  "tags" : [ {
+    "name" : "pet",
+    "description" : "Everything about your Pets",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://swagger.io"
+    }
+  }, {
+    "name" : "store",
+    "description" : "Access to Petstore orders",
+    "externalDocs" : {
+      "description" : "Find out more about our store",
+      "url" : "https://swagger.io"
+    }
+  }, {
+    "name" : "user",
+    "description" : "Operations about user"
+  }, {
+    "name" : "student",
+    "description" : "Student related operations within the institution"
+  } ],
+  "paths" : {
+    "/pet" : {
+      "put" : {
+        "tags" : [ "pet" ],
+        "summary" : "Update an existing pet.",
+        "description" : "Update an existing pet by Id.",
+        "operationId" : "updatePet",
+        "requestBody" : {
+          "description" : "Update an existent pet in the store",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            },
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            },
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Pet not found"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "pet" ],
+        "summary" : "Add a new pet to the store.",
+        "description" : "Add a new pet to the store.",
+        "operationId" : "addPet",
+        "requestBody" : {
+          "description" : "Create a new pet in the store",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            },
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            },
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Pet"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      }
+    },
+    "/pet/findByStatus" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "Finds Pets by status.",
+        "description" : "Multiple status values can be provided with comma separated strings.",
+        "operationId" : "findPetsByStatus",
+        "parameters" : [ {
+          "name" : "status",
+          "in" : "query",
+          "description" : "Status values that need to be considered for filter",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "default" : "available",
+            "enum" : [ "available", "pending", "sold" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Pet"
+                  }
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Pet"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      }
+    },
+    "/pet/findByTags" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "Finds Pets by tags.",
+        "description" : "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
+        "operationId" : "findPetsByTags",
+        "parameters" : [ {
+          "name" : "tags",
+          "in" : "query",
+          "description" : "Tags to filter by",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "items" : { }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Pet"
+                  }
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Pet"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid tag value"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      }
+    },
+    "/pet/{petId}" : {
+      "get" : {
+        "tags" : [ "pet" ],
+        "summary" : "Find pet by identifier.",
+        "description" : "Returns a single pet.",
+        "operationId" : "getPetById",
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "description" : "ID of pet to return",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Pet"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Pet not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        }, {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "pet" ],
+        "summary" : "Updates a pet in the store with form data.",
+        "description" : "Update a pet via the form data.",
+        "operationId" : "updatePetWithForm",
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "description" : "ID of pet that needs to be updated",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "format" : "int64"
+          }
+        }, {
+          "name" : "name",
+          "in" : "query",
+          "description" : "Name of pet that needs to be updated",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : { }
+        }, {
+          "name" : "status",
+          "in" : "query",
+          "description" : "Status of pet that needs to be updated",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successfully updated"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "pet" ],
+        "summary" : "Deletes a pet.",
+        "description" : "Delete a pet.",
+        "operationId" : "deletePet",
+        "parameters" : [ {
+          "name" : "api_key",
+          "in" : "header",
+          "description" : "",
+          "required" : false,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        }, {
+          "name" : "petId",
+          "in" : "path",
+          "description" : "Pet id to delete",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid pet value"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      }
+    },
+    "/pet/{petId}/uploadImage" : {
+      "post" : {
+        "tags" : [ "pet" ],
+        "summary" : "Uploads an image.",
+        "description" : "Upload an image of pet.",
+        "operationId" : "uploadFile",
+        "parameters" : [ {
+          "name" : "petId",
+          "in" : "path",
+          "description" : "ID of pet to update",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "format" : "int64"
+          }
+        }, {
+          "name" : "additionalMetadata",
+          "in" : "query",
+          "description" : "Additional Metadata",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : { }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/octet-stream" : {
+              "schema" : {
+                "format" : "binary"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "petstore_auth" : [ "write:pets", "read:pets" ]
+        } ]
+      }
+    },
+    "/store/inventory" : {
+      "get" : {
+        "tags" : [ "store" ],
+        "summary" : "Returns pet inventories by status.",
+        "description" : "Returns a map of status codes to quantities.",
+        "operationId" : "getInventory",
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "additionalProperties" : {
+                    "format" : "int32"
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "api_key" : [ ]
+        } ]
+      }
+    },
+    "/store/order" : {
+      "post" : {
+        "tags" : [ "store" ],
+        "summary" : "Place an order for a pet.",
+        "description" : "Place a new order in the store.",
+        "operationId" : "placeOrder",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Order"
+              }
+            },
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Order"
+              }
+            },
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Order"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "422" : {
+            "description" : "Validation exception"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/store/order/{orderId}" : {
+      "get" : {
+        "tags" : [ "store" ],
+        "summary" : "Find purchase order by identifier.",
+        "description" : "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
+        "operationId" : "getOrderById",
+        "parameters" : [ {
+          "name" : "orderId",
+          "in" : "path",
+          "description" : "ID of order that needs to be fetched",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Order"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Order not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "store" ],
+        "summary" : "Delete purchase order by identifier.",
+        "description" : "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors.",
+        "operationId" : "deleteOrder",
+        "parameters" : [ {
+          "name" : "orderId",
+          "in" : "path",
+          "description" : "ID of the order that needs to be deleted",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Order not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Create user.",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "createUser",
+        "requestBody" : {
+          "description" : "Created user object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            },
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/createWithList" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Creates list of users with given input array.",
+        "description" : "Creates list of users with given input array.",
+        "operationId" : "createUsersWithListInput",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "items" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Logs user into the system.",
+        "description" : "Log user into the system.",
+        "operationId" : "loginUser",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "query",
+          "description" : "The user name for login",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : { }
+        }, {
+          "name" : "password",
+          "in" : "query",
+          "description" : "The password for login in clear text",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "headers" : {
+              "X-Rate-Limit" : {
+                "description" : "calls per hour allowed by the user",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "format" : "int32"
+                }
+              },
+              "X-Expires-After" : {
+                "description" : "date in UTC when token expires",
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "format" : "date-time"
+                }
+              }
+            },
+            "content" : {
+              "application/xml" : {
+                "schema" : { }
+              },
+              "application/json" : {
+                "schema" : { }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid username/password supplied"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/logout" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Logs out current logged in user session.",
+        "description" : "Log user out of system.",
+        "operationId" : "logoutUser",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get user by user name.",
+        "description" : "Get user details based on username.",
+        "operationId" : "getUserByName",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The name that needs to be fetched. Use user1 for testing",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid username supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "Update user.",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "updateUser",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The name that needs to be updated",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "requestBody" : {
+          "description" : "Update an existent user in the store",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            },
+            "application/xml" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            },
+            "application/x-www-form-urlencoded" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "Delete user.",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "deleteUser",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The name that needs to be deleted",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "description" : "Invalid username supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get list of all students.",
+        "description" : "Retrieve all students with their details.",
+        "operationId" : "listStudents",
+        "responses" : {
+          "200" : {
+            "description" : "List of students",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Student"
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "student" ],
+        "summary" : "Add a new student.",
+        "description" : "Add a new student with personal details, enrollment number, contact info, and academic records.",
+        "operationId" : "addStudent",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Student"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Student created successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Student"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student/{studentId}" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get student by ID.",
+        "description" : "Retrieve student details by their enrollment number.",
+        "operationId" : "getStudentById",
+        "parameters" : [ {
+          "name" : "studentId",
+          "in" : "path",
+          "description" : "Enrollment number of the student",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Student details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Student"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Student not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "student" ],
+        "summary" : "Update student details.",
+        "description" : "Update personal details, contact info, or academic records of a student.",
+        "operationId" : "updateStudent",
+        "parameters" : [ {
+          "name" : "studentId",
+          "in" : "path",
+          "description" : "Enrollment number of the student",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Student"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Student updated successfully"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Student not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "student" ],
+        "summary" : "Delete a student.",
+        "description" : "Remove a student record from the system.",
+        "operationId" : "deleteStudent",
+        "parameters" : [ {
+          "name" : "studentId",
+          "in" : "path",
+          "description" : "Enrollment number of the student",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Student deleted successfully"
+          },
+          "404" : {
+            "description" : "Student not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/course" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get list of all courses.",
+        "description" : "Retrieve all courses with details.",
+        "operationId" : "listCourses",
+        "responses" : {
+          "200" : {
+            "description" : "List of courses",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Course"
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "student" ],
+        "summary" : "Add a new course.",
+        "description" : "Add course information including course ID, name, credits, and assigned faculty.",
+        "operationId" : "addCourse",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Course"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Course created successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Course"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/course/{courseId}" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get course by ID.",
+        "description" : "Retrieve course details by course ID.",
+        "operationId" : "getCourseById",
+        "parameters" : [ {
+          "name" : "courseId",
+          "in" : "path",
+          "description" : "ID of the course",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Course details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Course"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Course not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "student" ],
+        "summary" : "Update course details.",
+        "description" : "Update course information.",
+        "operationId" : "updateCourse",
+        "parameters" : [ {
+          "name" : "courseId",
+          "in" : "path",
+          "description" : "ID of the course",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Course"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Course updated successfully"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Course not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "student" ],
+        "summary" : "Delete a course.",
+        "description" : "Remove a course from the system.",
+        "operationId" : "deleteCourse",
+        "parameters" : [ {
+          "name" : "courseId",
+          "in" : "path",
+          "description" : "ID of the course",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Course deleted successfully"
+          },
+          "404" : {
+            "description" : "Course not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lecture" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get list of all lectures.",
+        "description" : "Retrieve all lectures with details.",
+        "operationId" : "listLectures",
+        "responses" : {
+          "200" : {
+            "description" : "List of lectures",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Lecture"
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "student" ],
+        "summary" : "Add a new lecture.",
+        "description" : "Add lecture details including timetable, notes, and attendance tracking.",
+        "operationId" : "addLecture",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Lecture"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Lecture created successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Lecture"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lecture/{lectureId}" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get lecture by ID.",
+        "description" : "Retrieve lecture details by lecture ID.",
+        "operationId" : "getLectureById",
+        "parameters" : [ {
+          "name" : "lectureId",
+          "in" : "path",
+          "description" : "ID of the lecture",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Lecture details",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Lecture"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Lecture not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "student" ],
+        "summary" : "Update lecture details.",
+        "description" : "Update lecture information including timetable, notes, and attendance.",
+        "operationId" : "updateLecture",
+        "parameters" : [ {
+          "name" : "lectureId",
+          "in" : "path",
+          "description" : "ID of the lecture",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Lecture"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Lecture updated successfully"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Lecture not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "student" ],
+        "summary" : "Delete a lecture.",
+        "description" : "Remove a lecture from the system.",
+        "operationId" : "deleteLecture",
+        "parameters" : [ {
+          "name" : "lectureId",
+          "in" : "path",
+          "description" : "ID of the lecture",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Lecture deleted successfully"
+          },
+          "404" : {
+            "description" : "Lecture not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admission/query" : {
+      "post" : {
+        "tags" : [ "student" ],
+        "summary" : "Submit an admission query.",
+        "description" : "Students can raise admission related questions to the administration.",
+        "operationId" : "submitAdmissionQuery",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AdmissionQuery"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Query submitted successfully"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/support/request" : {
+      "post" : {
+        "tags" : [ "student" ],
+        "summary" : "Submit a general support request.",
+        "description" : "Students can raise general support issues or questions to the administration.",
+        "operationId" : "submitSupportRequest",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/SupportRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Support request submitted successfully"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/student/{studentId}/grades" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get grade report for a student.",
+        "description" : "Retrieve academic grade reports for a student.",
+        "operationId" : "getGradeReport",
+        "parameters" : [ {
+          "name" : "studentId",
+          "in" : "path",
+          "description" : "Enrollment number of the student",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : { }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Grade report retrieved successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/GradeReport"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Student not found"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notifications" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get notifications or announcements.",
+        "description" : "Retrieve current notifications or announcements for students and staff.",
+        "operationId" : "getNotifications",
+        "responses" : {
+          "200" : {
+            "description" : "List of notifications",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Notification"
+                  }
+                }
+              }
+            }
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "student" ],
+        "summary" : "Secure login for students and staff.",
+        "description" : "Authenticate users and provide access tokens.",
+        "operationId" : "login",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Login successful",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized - invalid credentials"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/profile" : {
+      "get" : {
+        "tags" : [ "student" ],
+        "summary" : "Get profile information for logged in user.",
+        "description" : "Retrieve profile details for authenticated student or staff.",
+        "operationId" : "getProfile",
+        "responses" : {
+          "200" : {
+            "description" : "Profile information retrieved",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserProfile"
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "default" : {
+            "description" : "Unexpected error",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Order" : {
+        "properties" : {
+          "id" : {
+            "format" : "int64"
+          },
+          "petId" : {
+            "format" : "int64"
+          },
+          "quantity" : {
+            "format" : "int32"
+          },
+          "shipDate" : {
+            "format" : "date-time"
+          },
+          "status" : {
+            "description" : "Order Status",
+            "enum" : [ "placed", "approved", "delivered" ]
+          },
+          "complete" : { }
+        },
+        "xml" : {
+          "name" : "order"
+        }
+      },
+      "Customer" : {
+        "properties" : {
+          "id" : {
+            "format" : "int64"
+          },
+          "username" : { },
+          "address" : {
+            "xml" : {
+              "name" : "addresses",
+              "wrapped" : true
+            },
+            "items" : {
+              "$ref" : "#/components/schemas/Address"
+            }
+          }
+        },
+        "xml" : {
+          "name" : "customer"
+        }
+      },
+      "Address" : {
+        "properties" : {
+          "street" : { },
+          "city" : { },
+          "state" : { },
+          "zip" : { }
+        },
+        "xml" : {
+          "name" : "address"
+        }
+      },
+      "Category" : {
+        "properties" : {
+          "id" : {
+            "format" : "int64"
+          },
+          "name" : { }
+        },
+        "xml" : {
+          "name" : "category"
+        }
+      },
+      "User" : {
+        "properties" : {
+          "id" : {
+            "format" : "int64"
+          },
+          "username" : { },
+          "firstName" : { },
+          "lastName" : { },
+          "email" : { },
+          "password" : { },
+          "phone" : { },
+          "userStatus" : {
+            "description" : "User Status",
+            "format" : "int32"
+          }
+        },
+        "xml" : {
+          "name" : "user"
+        }
+      },
+      "Tag" : {
+        "properties" : {
+          "id" : {
+            "format" : "int64"
+          },
+          "name" : { }
+        },
+        "xml" : {
+          "name" : "tag"
+        }
+      },
+      "Pet" : {
+        "required" : [ "name", "photoUrls" ],
+        "properties" : {
+          "id" : {
+            "format" : "int64"
+          },
+          "name" : { },
+          "category" : {
+            "$ref" : "#/components/schemas/Category"
+          },
+          "photoUrls" : {
+            "xml" : {
+              "wrapped" : true
+            },
+            "items" : {
+              "xml" : {
+                "name" : "photoUrl"
+              }
+            }
+          },
+          "tags" : {
+            "xml" : {
+              "wrapped" : true
+            },
+            "items" : {
+              "$ref" : "#/components/schemas/Tag"
+            }
+          },
+          "status" : {
+            "description" : "Pet status in the store",
+            "enum" : [ "available", "pending", "sold" ]
+          }
+        },
+        "xml" : {
+          "name" : "pet"
+        }
+      },
+      "ApiResponse" : {
+        "properties" : {
+          "code" : {
+            "format" : "int32"
+          },
+          "type" : { },
+          "message" : { }
+        },
+        "xml" : {
+          "name" : "##default"
+        }
+      },
+      "Error" : {
+        "required" : [ "code", "message" ],
+        "properties" : {
+          "code" : { },
+          "message" : { }
+        }
+      },
+      "Student" : {
+        "required" : [ "enrollmentNumber", "personalDetails" ],
+        "properties" : {
+          "enrollmentNumber" : {
+            "description" : "Unique enrollment number of the student"
+          },
+          "personalDetails" : {
+            "$ref" : "#/components/schemas/PersonalDetails"
+          },
+          "contactInformation" : {
+            "$ref" : "#/components/schemas/ContactInformation"
+          },
+          "academicRecords" : {
+            "$ref" : "#/components/schemas/AcademicRecords"
+          }
+        },
+        "description" : "Student data management schema"
+      },
+      "PersonalDetails" : {
+        "properties" : {
+          "firstName" : { },
+          "lastName" : { },
+          "dateOfBirth" : {
+            "format" : "date"
+          },
+          "gender" : {
+            "enum" : [ "Male", "Female", "Other" ]
+          }
+        }
+      },
+      "ContactInformation" : {
+        "properties" : {
+          "email" : {
+            "format" : "email"
+          },
+          "phone" : { },
+          "address" : { }
+        }
+      },
+      "AcademicRecords" : {
+        "properties" : {
+          "courses" : {
+            "items" : {
+              "$ref" : "#/components/schemas/CourseRecord"
+            }
+          }
+        }
+      },
+      "CourseRecord" : {
+        "properties" : {
+          "courseId" : { },
+          "grades" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Grade"
+            }
+          }
+        }
+      },
+      "Grade" : {
+        "properties" : {
+          "assignment" : { },
+          "score" : {
+            "format" : "float"
+          }
+        }
+      },
+      "Course" : {
+        "required" : [ "courseId", "credits", "name" ],
+        "properties" : {
+          "courseId" : {
+            "description" : "Unique identifier for the course"
+          },
+          "name" : { },
+          "credits" : { },
+          "assignedFaculty" : {
+            "description" : "Name or ID of the faculty assigned"
+          }
+        }
+      },
+      "Lecture" : {
+        "required" : [ "courseId", "lectureId", "timetable" ],
+        "properties" : {
+          "lectureId" : { },
+          "courseId" : { },
+          "timetable" : {
+            "description" : "Scheduled time for the lecture"
+          },
+          "lectureNotes" : { },
+          "attendance" : {
+            "items" : {
+              "$ref" : "#/components/schemas/AttendanceRecord"
+            }
+          }
+        }
+      },
+      "AttendanceRecord" : {
+        "properties" : {
+          "studentId" : { },
+          "present" : { }
+        }
+      },
+      "AdmissionQuery" : {
+        "required" : [ "query", "studentId" ],
+        "properties" : {
+          "studentId" : { },
+          "query" : { },
+          "submittedAt" : {
+            "format" : "date-time"
+          }
+        }
+      },
+      "SupportRequest" : {
+        "required" : [ "request", "studentId" ],
+        "properties" : {
+          "studentId" : { },
+          "request" : { },
+          "submittedAt" : {
+            "format" : "date-time"
+          }
+        }
+      },
+      "GradeReport" : {
+        "properties" : {
+          "studentId" : { },
+          "grades" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Grade"
+            }
+          }
+        }
+      },
+      "Notification" : {
+        "properties" : {
+          "id" : { },
+          "title" : { },
+          "message" : { },
+          "date" : {
+            "format" : "date-time"
+          }
+        }
+      },
+      "LoginRequest" : {
+        "required" : [ "password", "username" ],
+        "properties" : {
+          "username" : { },
+          "password" : {
+            "format" : "password"
+          }
+        }
+      },
+      "LoginResponse" : {
+        "properties" : {
+          "token" : { },
+          "expiresAt" : {
+            "format" : "date-time"
+          }
+        }
+      },
+      "UserProfile" : {
+        "properties" : {
+          "userId" : { },
+          "username" : { },
+          "firstName" : { },
+          "lastName" : { },
+          "email" : {
+            "format" : "email"
+          },
+          "roles" : {
+            "items" : { }
+          }
+        }
+      }
+    },
+    "requestBodies" : {
+      "Pet" : {
+        "description" : "Pet object that needs to be added to the store",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Pet"
+            }
+          },
+          "application/xml" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Pet"
+            }
+          }
+        }
+      },
+      "UserArray" : {
+        "description" : "List of user object",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "items" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "petstore_auth" : {
+        "type" : "oauth2",
+        "flows" : {
+          "implicit" : {
+            "authorizationUrl" : "https://petstore3.swagger.io/oauth/authorize",
+            "scopes" : {
+              "write:pets" : "modify pets in your account",
+              "read:pets" : "read your pets"
+            }
+          }
+        }
+      },
+      "api_key" : {
+        "type" : "apiKey",
+        "name" : "api_key",
+        "in" : "header"
+      }
+    }
+  }
+}
